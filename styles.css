@@ -82,7 +82,7 @@ html {
     background-image: url('assets/images/banner.png'); 
     background-size: cover;
     background-position: center;
-    width: 100%; 
+    width: 100vh;
     position: relative; 
 }
 
