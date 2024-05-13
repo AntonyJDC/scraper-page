@@ -79,7 +79,6 @@ html {
     background-image: url('assets/images/banner.png'); 
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
     width: 100%;
     position: relative; 
 }
