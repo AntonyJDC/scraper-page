@@ -1,0 +1,171 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #fff;
+}
+
+#cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search-container {
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    text-align: center;
+    background: #6A98C9;
+    /*border-bottom: 1px solid #ccc;*/
+}
+
+.logo {
+    height: 80px;
+    /* Ajusta el tamaño según tus necesidades */
+    margin-right: 20px;
+}
+
+.search-bar {
+    display: inline-block;
+    margin-top: 20px;
+    border: 1px solid #FFFF;
+    border-radius: 12px;
+    background: #FFFF;
+}
+
+.search-input {
+    font-size: 16px;
+    width: 500px;
+    border: none;
+    background: transparent;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.search-button {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding-right: 20px;
+}
+
+.search-button:hover {
+    color: #6A98C9;
+}
+
+.logos-container {
+    display: flex;
+    justify-content: space-around;
+    /* Distribuye los logos equitativamente a lo largo del contenedor */
+    align-items: center;
+    /* Alinea verticalmente los logos */
+    padding: 30px;
+    background-color: #ffffff;
+    /* Color de fondo del contenedor, ajustable según tu diseño */
+}
+
+.store-logo {
+    height: 50px;
+    width: auto;
+}
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    height: 500px; 
+    background-image: url('assets/images/banner.png'); 
+    background-size: cover;
+    background-position: center;
+    width: 100%; 
+    position: relative; 
+}
+
+
+h1 {
+    color: hsl(0, 0%, 13%);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding-left: 7%;
+    width: 50%;
+    line-height: 1;
+    font-size: 43px;
+    font-weight: 800;
+}
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 240px;
+    /* Ancho fijo para todas las tarjetas */
+    height: 420px;
+    /* Altura fija para todas las tarjetas */
+    margin: 10px;
+    overflow: hidden;
+    /* Oculta cualquier contenido que desborde */
+    display: flex;
+    flex-direction: column;
+    /* Organiza los elementos en columna */
+    background: #fff;
+    /* Fondo blanco para coherencia */
+    border: 1px solid #ccc;
+    /* Borde opcional */
+}
+
+.card-image {
+    height: 60%;
+    /* Altura del div de la imagen */
+    width: 100%;
+    background-color: #f0f0f0;
+    /* Fondo claro para la sección de la imagen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-image img {
+    width: 100%;
+    /* Ajusta la imagen para que llene el ancho del div */
+    height: 100%;
+    /* Ajusta la altura para llenar el div */
+    object-fit: cover;
+    /* Asegura que la imagen cubra completamente el espacio sin deformarse */
+}
+
+.card-info {
+    height: 40%;
+    /* Altura del div de información */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* Distribuye el espacio entre título, precio y link */
+}
+
+.card-info h3,
+.card-info p,
+.card-info a {
+    margin: 5px 0;
+    /* Margen para espaciar los elementos del texto */
+    text-align: center;
+    /* Centra el texto dentro del div */
+}
+
+.card-info a {
+    color: #007bff;
+    /* Estilo para el link, opcional */
+    text-decoration: none;
+    /* Sin subrayado en el link */
+}
+
+#pagination button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
