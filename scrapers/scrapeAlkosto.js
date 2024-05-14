@@ -18,7 +18,8 @@ async function scrapeAlkosto(searchQuery) {
             const price = card.querySelector('.product__price--discounts__price') ? card.querySelector('.product__price--discounts__price').innerText.replace(/\D/g, '') : 'No price available';
             const link = card.querySelector('.product__item__top__title').getAttribute('data-url') ? window.location.origin + card.querySelector('.product__item__top__title').getAttribute('data-url') : 'Link no available';
             const imageUrl = card.querySelector('.product__item__information__image img') ? card.querySelector('.product__item__information__image img').src : 'No image available';
-            return { title, price, link, imageUrl };
+            const storeName = 'Alkosto';
+            return { title, price, link, imageUrl, storeName};
         })
             .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))
             .sort((a, b) => a.price - b.price)

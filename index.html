@@ -16,29 +16,58 @@
 </head>
 
 <body>
-    <div class="search-container">
-        <img class="logo" src="assets/images/logo2.png" alt="Logo">
-        <div class="search-bar">
-            <input type="text" placeholder="Enter your product name..." class="search-input" id="searchQuery">
-            <button onclick="searchProducts()" class="search-button">Buscar</button>
+    <header>
+        <div class="search-container">
+            <img class="logo" src="assets/images/logo2.png" alt="Logo">
+            <div class="search-bar">
+                <input type="text" placeholder="Enter your product name..." class="search-input" id="searchQuery">
+                <button onclick="searchProducts()" class="search-button">Buscar</button>
+            </div>
         </div>
-    </div>
-    <div class="banner">
-        <h1 class="banner-text">COMPARA LOS PRECIOS DE TUS PRODUCTOS TECNOLÓGICOS FAVORITOS</h1>
-    </div>
-    <div class="logos-container">
-        <img src="https://cccasanare.co/wp-content/uploads/2024/01/mercado-libre.png" alt="Logo 1" class="store-logo">
-        <img src="https://www.alkosto.com/medias/alkosto-logo.svg?context=bWFzdGVyfGltYWdlc3wxMjMxMnxpbWFnZS9zdmcreG1sfGFXMWhaMlZ6TDJnMllTOW9NMlV2T1RrNU1URXhNREEyTmpJd05pNXpkbWN8OGRhMGMwM2M1M2FmNjk1MTRhODkzZjQ3NmI4OTU2N2Y1MTg5NmJlYWUxMTU5Njc1NmVkZjgxYzRlY2M0YjQ0Yw"
-            alt="Logo 2" class="store-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Ol%C3%ADmpica_%28Colombia%29_logo.svg/512px-Ol%C3%ADmpica_%28Colombia%29_logo.svg.png"
-            alt="Logo 3" class="store-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Falabella.svg/2560px-Falabella.svg.png"
-            alt="Logo 4" class="store-logo">
-        <img src="https://d1rnpo543m3vxh.cloudfront.net/content/setting-store/exitocol/fastStoreConfiguration/64-fileWidget-root_iconExito.svg?v=1712607924186"
-            alt="Logo 5" class="store-logo">
-    </div>
-    <div id="cards-container"></div>
-    <div id="pagination"></div>
+    </header>
+    <nav>
+        <div class="banner">
+            <h1 class="banner-text">COMPARA LOS PRECIOS DE TUS PRODUCTOS TECNOLÓGICOS FAVORITOS</h1>
+        </div>
+        <div class="logos-container">
+            <img src="https://cccasanare.co/wp-content/uploads/2024/01/mercado-libre.png" alt="Logo 1"
+                class="store-logo">
+            <img src="https://www.alkosto.com/medias/alkosto-logo.svg?context=bWFzdGVyfGltYWdlc3wxMjMxMnxpbWFnZS9zdmcreG1sfGFXMWhaMlZ6TDJnMllTOW9NMlV2T1RrNU1URXhNREEyTmpJd05pNXpkbWN8OGRhMGMwM2M1M2FmNjk1MTRhODkzZjQ3NmI4OTU2N2Y1MTg5NmJlYWUxMTU5Njc1NmVkZjgxYzRlY2M0YjQ0Yw"
+                alt="Logo 2" class="store-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Ol%C3%ADmpica_%28Colombia%29_logo.svg/512px-Ol%C3%ADmpica_%28Colombia%29_logo.svg.png"
+                alt="Logo 3" class="store-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Falabella.svg/2560px-Falabella.svg.png"
+                alt="Logo 4" class="store-logo">
+            <img src="https://d1rnpo543m3vxh.cloudfront.net/content/setting-store/exitocol/fastStoreConfiguration/64-fileWidget-root_iconExito.svg?v=1712607924186"
+                alt="Logo 5" class="store-logo">
+        </div>
+    </nav>
+    <section class="product-page">
+        <div class="filters">
+            <!-- Ordenar por precio usando option buttons -->
+            <div class="filter-section">
+                <a class="label-title" >Ordenar Por:</a>
+                <div>
+                    <input type="radio" id="sortLower" name="sortPrice" value="lower" checked>
+                    <label for="sortLower">Menor Precio</label>
+                </div>
+                <div>
+                    <input type="radio" id="sortHigher" name="sortPrice" value="higher">
+                    <label for="sortHigher">Mayor Precio</label>
+                </div>
+            </div>
+            <!-- Filtrar por tienda usando checkboxes -->
+            <div class="filter-section">
+                <a class="label-title">Filtrar por Tienda:</a>
+                <div id="storeFilters">
+                </div>
+            </div>
+        </div>
+        <div class="products-container">
+            <div id="cards-container"></div>
+            <div id="pagination"></div>
+        </div>
+    </section>
 </body>
 
 </html>

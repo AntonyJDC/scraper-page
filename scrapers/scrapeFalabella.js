@@ -19,8 +19,8 @@ async function scrapeFalabella(searchQuery) {
             const price = priceElement ? priceElement.innerText.replace(/\D/g, '') : 'No price available';
             const imageUrl = card.querySelector('picture img') ? card.querySelector('picture img').src : 'No image available';
             const Link = card.querySelector('a') ? card.querySelector('a').href : 'No link available';
-
-            return { title, price, imageUrl, Link };
+            const storeName = 'Falabella';
+            return { title, price, imageUrl, Link, storeName};
         })
             .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))
             .sort((a, b) => a.price - b.price)

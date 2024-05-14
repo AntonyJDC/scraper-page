@@ -18,7 +18,8 @@ async function scrapeOlimpica(searchQuery) {
             const price = card.querySelector('.vtex-product-price-1-x-sellingPriceValue') ? card.querySelector('.vtex-product-price-1-x-sellingPriceValue').innerText.replace(/\D/g, '') : 'No price available';
             const link = card.querySelector('a.vtex-product-summary-2-x-clearLink') ? card.querySelector('a.vtex-product-summary-2-x-clearLink').href : 'No link available';
             const imageUrl = card.querySelector('.vtex-product-summary-2-x-imageNormal') ? card.querySelector('.vtex-product-summary-2-x-imageNormal').src : 'No image available';
-            return { title, price, link, imageUrl };
+            const storeName = 'Olimpica';
+            return { title, price, link, imageUrl, storeName};
 
         })
             .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))

@@ -18,7 +18,8 @@ async function scrapeExito(searchQuery) {
             const price = card.querySelector('.ProductPrice_container__price__XmMWA') ? card.querySelector('.ProductPrice_container__price__XmMWA').innerText.replace(/\D/g, '') : 'No price available';
             const link = card.querySelector('.link_fs-link__J1sGD') ? card.querySelector('.link_fs-link__J1sGD').href : 'No link available';
             const imageUrl = card.querySelector('.imagen_plp') ? card.querySelector('.imagen_plp').src : 'No image available';
-            return { title, price, link, imageUrl };
+            const storeName = 'Exito';
+            return { title, price, link, imageUrl, storeName};
         })
             .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))
             .sort((a, b) => a.price - b.price)

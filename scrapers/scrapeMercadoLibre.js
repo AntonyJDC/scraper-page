@@ -19,12 +19,12 @@ async function scrapeMercadoLibre(searchQuery) {
             const link = card.querySelector('.ui-search-link') ? card.querySelector('.ui-search-link').href : 'Link no available';
             const imageUrl = card.querySelector('img.ui-search-result-image__element') ? card.querySelector('img.ui-search-result-image__element').src : 'No image available';
             const conditionElement = card.querySelector('.ui-search-item__group__element.ui-search-item__details');
-
+            const storeName = 'MercadoLibre';
             if (conditionElement && conditionElement.innerText.toLowerCase().includes('usado')) {
                 return null;
             }
 
-            return { title, price, link, imageUrl };
+            return { title, price, link, imageUrl, storeName};
 
         })
             .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))

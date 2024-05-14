@@ -19,12 +19,10 @@ html {
     padding: 15px;
     text-align: center;
     background: #6A98C9;
-    /*border-bottom: 1px solid #ccc;*/
 }
 
 .logo {
     height: 80px;
-    /* Ajusta el tamaño según tus necesidades */
     margin-right: 20px;
 }
 
@@ -75,12 +73,12 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 500px; 
-    background-image: url('assets/images/banner.png'); 
+    height: 500px;
+    background-image: url('assets/images/banner.png');
     background-size: contain;
     background-repeat: no-repeat;
     width: 100%;
-    position: relative; 
+    position: relative;
 }
 
 
@@ -98,29 +96,21 @@ h1 {
 
 
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: 240px;
-    /* Ancho fijo para todas las tarjetas */
     height: 420px;
-    /* Altura fija para todas las tarjetas */
     margin: 10px;
     overflow: hidden;
-    /* Oculta cualquier contenido que desborde */
     display: flex;
     flex-direction: column;
-    /* Organiza los elementos en columna */
     background: #fff;
-    /* Fondo blanco para coherencia */
     border: 1px solid #ccc;
-    /* Borde opcional */
+    margin-bottom: 30px;
 }
 
 .card-image {
     height: 60%;
-    /* Altura del div de la imagen */
     width: 100%;
-    background-color: #f0f0f0;
-    /* Fondo claro para la sección de la imagen */
+    background-color: #ffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -128,41 +118,114 @@ h1 {
 
 .card-image img {
     width: 100%;
-    /* Ajusta la imagen para que llene el ancho del div */
     height: 100%;
-    /* Ajusta la altura para llenar el div */
-    object-fit: cover;
-    /* Asegura que la imagen cubra completamente el espacio sin deformarse */
+    object-fit: contain;
 }
 
 .card-info {
     height: 40%;
-    /* Altura del div de información */
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    /* Distribuye el espacio entre título, precio y link */
 }
 
 .card-info h3,
 .card-info p,
 .card-info a {
     margin: 5px 0;
-    /* Margen para espaciar los elementos del texto */
     text-align: center;
-    /* Centra el texto dentro del div */
 }
 
 .card-info a {
     color: #007bff;
-    /* Estilo para el link, opcional */
     text-decoration: none;
-    /* Sin subrayado en el link */
 }
 
-#pagination button {
+
+.product-page {
+    display: flex;
+    align-items: start;
+    padding: 7%;
+}
+
+.filters {
+    display: none;
+}
+
+.filter-section {
+    background-color: #6a98c9cb;
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.label-title {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #fff;
+    color: #FFF;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+.filter-section label {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin: 5px 0;
+    display: block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-section input[type="radio"],
+.filter-section input[type="checkbox"] {
+    display: none;
+}
+
+.filter-section input[type="radio"]:checked + label,
+.filter-section input[type="checkbox"]:checked + label {
+    background-color: #33669c;
+    color: white;
+}
+
+.filter-section label:hover {
+    background-color: #e7f1ff;
+}
+
+.filter-section input[type="checkbox"]:checked + label {
+    background-color: #33669c;
+    color: white;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 5px 10px;
     margin-right: 5px;
+}
+
+.page-button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    background-color: #6A98C9;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: red 0.2s;
+}
+
+.page-button:hover {
+    background-color: #33669c;
+}
+
+.page-button.active {
+    background-color: #33669c;
 }

@@ -1,28 +1,32 @@
-// public/app.js
 let currentPage = 1;
 const cardsPerPage = 5;
 let allProducts = [];
+let currentFilteredProducts = [];
 
 function searchProducts() {
     const searchQuery = document.getElementById('searchQuery').value;
     fetch(`http://localhost:3000/search?query=${encodeURIComponent(searchQuery)}`)
         .then(response => response.json())
         .then(data => {
-            allProducts = [].concat(...Object.values(data));  // Aplana los resultados
-            allProducts.sort((a, b) => a.price - b.price);  // Ordena por precio
-            showCards();
-            setupPagination();
+            allProducts = [].concat(...Object.values(data));
+            currentFilteredProducts = allProducts;
+            allProducts.sort((a, b) => a.price - b.price);
+            displayFilters();
+            currentFilteredProducts = allProducts.slice();
+            showCards(currentFilteredProducts);
+            setupPagination(currentFilteredProducts);
         })
         .catch(error => console.error('Error:', error));
 }
 
-function showCards() {
+function showCards(filteredProducts = allProducts) {
     const cardsContainer = document.getElementById('cards-container');
-    cardsContainer.innerHTML = '';  // Limpiar tarjetas anteriores
+    updateActiveButton();
+    cardsContainer.innerHTML = '';
     let start = (currentPage - 1) * cardsPerPage;
     let end = start + cardsPerPage;
-    for (let i = start; i < end && i < allProducts.length; i++) {
-        const product = allProducts[i];
+    for (let i = start; i < end && i < filteredProducts.length; i++) {
+        const product = filteredProducts[i];
         let card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
@@ -39,14 +43,101 @@ function showCards() {
     }
 }
 
-function setupPagination() {
+function setupPagination(filteredProducts) {
     const pagination = document.getElementById('pagination');
-    pagination.innerHTML = '';  // Limpiar paginación anterior
-    const pageCount = Math.ceil(allProducts.length / cardsPerPage);
+    pagination.innerHTML = '';
+
+    const pageCount = Math.ceil(filteredProducts.length / cardsPerPage);
     for (let i = 1; i <= pageCount; i++) {
         let button = document.createElement('button');
+        button.className = 'page-button';
         button.innerText = i;
-        button.onclick = () => { currentPage = i; showCards(); };
+        button.addEventListener('click', () => {
+            currentPage = i;
+            showCards(filteredProducts);
+        });
         pagination.appendChild(button);
     }
+    updateActiveButton();
+}
+
+function updateActiveButton() {
+    const buttons = document.querySelectorAll('.page-button');
+    buttons.forEach(button => {
+        if (parseInt(button.innerText) === currentPage) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+}
+
+function displayFilters() {
+    const filtersSection = document.querySelector('.filters');
+    filtersSection.style.display = 'block';
+    loadStoresFilters();
+}
+
+function loadStoresFilters() {
+    const stores = [...new Set(allProducts.map(product => product.storeName))];
+    const storeFiltersContainer = document.getElementById('storeFilters');
+    storeFiltersContainer.innerHTML = '';
+
+    stores.forEach(store => {
+        const container = document.createElement('div');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = store;
+        checkbox.value = store;
+        checkbox.name = "storeFilter";
+        checkbox.checked = true;
+        checkbox.addEventListener('change', filterProductsByStore);
+
+        const label = document.createElement('label');
+        label.htmlFor = store;
+        label.textContent = store;
+
+        container.appendChild(checkbox);
+        container.appendChild(label);
+        storeFiltersContainer.appendChild(container);
+    });
+}
+
+function loadStores() {
+    const storeSelect = document.getElementById('filterStore');
+    stores.forEach(store => {
+        const option = document.createElement('option');
+        option.value = store;
+        option.textContent = store;
+        storeSelect.appendChild(option);
+    });
+}
+
+function sortProducts() {
+    const sortOrder = document.querySelector('input[name="sortPrice"]:checked').value;
+    if (sortOrder === 'lower') {
+        currentFilteredProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    } else if (sortOrder === 'higher') {
+        currentFilteredProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    }
+    showCards(currentFilteredProducts);
+    setupPagination(currentFilteredProducts);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('input[name="sortPrice"]').forEach(input => {
+        input.addEventListener('change', sortProducts);
+    });
+});
+
+function filterProductsByStore() {
+    const checkedStores = Array.from(document.querySelectorAll('input[name="storeFilter"]:checked')).map(el => el.value);
+    if (checkedStores.length > 0) {
+        currentFilteredProducts = allProducts.filter(product => checkedStores.includes(product.storeName));
+    } else {
+        currentFilteredProducts = allProducts.slice();
+    }
+    setupPagination(currentFilteredProducts);
+    showCards(currentFilteredProducts);
+    sortProducts();
 }
