@@ -5,10 +5,17 @@ let currentFilteredProducts = [];
 
 function searchProducts() {
     const searchQuery = document.getElementById('searchQuery').value;
+    document.getElementById('searchResultText').style.display = 'block';
+    document.getElementById('searchResultText').textContent = 'Estamos buscando y comparando los precios de tus productos, espera un momento por favor.';
     fetch(`http://localhost:3000/search?query=${encodeURIComponent(searchQuery)}`)
         .then(response => response.json())
         .then(data => {
             allProducts = [].concat(...Object.values(data));
+            if (allProducts.length > 0) {
+                document.getElementById('searchResultText').textContent = 'Resultados de búsqueda para: ' + searchQuery;
+            } else {
+                document.getElementById('searchResultText').textContent = 'No se encontraron productos para: ' + searchQuery;
+            }
             currentFilteredProducts = allProducts;
             allProducts.sort((a, b) => a.price - b.price);
             displayFilters();
@@ -16,7 +23,10 @@ function searchProducts() {
             showCards(currentFilteredProducts);
             setupPagination(currentFilteredProducts);
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('searchResultText').textContent = 'Error al buscar productos. Por favor, vuelva a intentarlo.';
+        });
 }
 
 function showCards(filteredProducts = allProducts) {
@@ -35,9 +45,9 @@ function showCards(filteredProducts = allProducts) {
                     </div>
                     <div class="card-info">
                         <h3>${product.title}</h3>
-                        <p>$${product.price}</p>
+                        <p class="price">$${product.price}</p>
                         <p>${product.storeName || 'Nombre de tienda no disponible'}</p>
-                        <a href="${product.link}" target="_blank">Ver Producto</a>
+                        <button onclick="window.open('${product.link}', '_blank')" class="product-button">Ver Producto</button>
                     </div>`;
         cardsContainer.appendChild(card);
     }
