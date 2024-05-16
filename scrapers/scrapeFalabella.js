@@ -8,11 +8,11 @@ async function scrapeFalabella(searchQuery) {
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36');
 
-    await page.goto(`https://www.falabella.com.co/falabella-co/search/?Ntt=${encodeURIComponent(searchQuery)}`, { waitUntil: 'networkidle2' });
-    await page.waitForSelector('.grid-pod', { timeout: 10000 });
+    await page.goto(`https://www.falabella.com.co/falabella-co/search/?Ntt=${encodeURIComponent(searchQuery)}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.pod', { timeout: 10000 });
 
     const filteredProducts = await page.evaluate((query) => {
-        const productCards = document.querySelectorAll('.grid-pod');
+        const productCards = document.querySelectorAll('.pod');
         return Array.from(productCards).map(card => {
             const title = card.querySelector('b[id^="testId-pod-displaySubTitle"]') ? card.querySelector('b[id^="testId-pod-displaySubTitle"]').innerText : 'No title available';
             const priceElement = card.querySelector('.copy10');

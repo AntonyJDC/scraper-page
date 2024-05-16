@@ -13,23 +13,15 @@ async function scrapeMercadoLibre(searchQuery) {
 
     const filteredProducts = await page.evaluate((query) => {
         const productCards = document.querySelectorAll('.ui-search-result__wrapper');
-        return Array.from(productCards).map(card => {
+        const limitedProducts = Array.from(productCards).slice(0, 5).map(card => {
             const title = card.querySelector('.ui-search-item__title') ? card.querySelector('.ui-search-item__title').innerText : 'No title available';
-            const price = card.querySelector('.ui-search-price__second-line .andes-money-amount__fraction') ? card.querySelector('.ui-search-price__second-line .andes-money-amount__fraction').innerText.replace(/\D/g, '') : 'No price available';
+            const price = card.querySelector('.ui-search-price__second-line .andes-money-amount__fraction') ? parseInt(card.querySelector('.ui-search-price__second-line .andes-money-amount__fraction').innerText.replace(/\D/g, ''), 10) : 0;
             const link = card.querySelector('.ui-search-link') ? card.querySelector('.ui-search-link').href : 'Link no available';
             const imageUrl = card.querySelector('img.ui-search-result-image__element') ? card.querySelector('img.ui-search-result-image__element').src : 'No image available';
-            const conditionElement = card.querySelector('.ui-search-item__group__element.ui-search-item__details');
-            const storeName = 'MercadoLibre';
-            if (conditionElement && conditionElement.innerText.toLowerCase().includes('usado')) {
-                return null;
-            }
+            return { title, price, link, imageUrl, storeName: 'MercadoLibre' };
+        });
 
-            return { title, price, link, imageUrl, storeName};
-
-        })
-            .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.price - b.price)
-            .slice(0, 3);
+        return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
 
     await browser.close();

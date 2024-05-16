@@ -14,10 +14,10 @@ app.use(express.static('public'));
 async function runParallelSearchesAndSave(searchQuery) {
     const alkosto = await scrapeAlkosto(searchQuery);
     const exito = await scrapeExito(searchQuery);
-    const falabella = await scrapeFalabella(searchQuery);
+    //const falabella = await scrapeFalabella(searchQuery);
     const mercadolibre = await scrapeMercadoLibre(searchQuery);
-    const olimpica = await scrapeOlimpica(searchQuery);
-    return [].concat(mercadolibre, alkosto, exito, olimpica, falabella);
+    //const olimpica = await scrapeOlimpica(searchQuery);
+    return [].concat(mercadolibre, alkosto, exito);
 }
 
 app.get('/search', async (req, res) => {
