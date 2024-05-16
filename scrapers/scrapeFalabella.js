@@ -13,18 +13,16 @@ async function scrapeFalabella(searchQuery) {
 
     const filteredProducts = await page.evaluate((query) => {
         const productCards = document.querySelectorAll('.pod');
-        return Array.from(productCards).map(card => {
+        const limitedProducts = Array.from(productCards).slice(0, 5).map(card => { 
             const title = card.querySelector('b[id^="testId-pod-displaySubTitle"]') ? card.querySelector('b[id^="testId-pod-displaySubTitle"]').innerText : 'No title available';
             const priceElement = card.querySelector('.copy10');
             const price = priceElement ? priceElement.innerText.replace(/\D/g, '') : 'No price available';
             const imageUrl = card.querySelector('picture img') ? card.querySelector('picture img').src : 'No image available';
-            const Link = card.querySelector('a') ? card.querySelector('a').href : 'No link available';
-            const storeName = 'Falabella';
-            return { title, price, imageUrl, Link, storeName};
-        })
-            .filter(item => item && item.title.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.price - b.price)
-            .slice(0, 3);
+            const link = card.querySelector('a[id^="testId-pod"]') ? card.querySelector('a[id^="testId-pod"]').href : 'No link available';
+            return { title, price, link, imageUrl, storeName: 'Falabella' };
+        });
+
+        return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
     await browser.close();
     return filteredProducts;
