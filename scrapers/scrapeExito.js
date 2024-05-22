@@ -20,6 +20,12 @@ async function scrapeExito(searchQuery) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
 
+        function queryMatchTitle(query, title) {
+            const queryWords = normalizeString(query).split(/\s+/);
+            const titleWords = normalizeString(title).split(/\s+/);
+            return queryWords.every(qWord => titleWords.includes(qWord));
+        }
+
         const productCards = document.querySelectorAll('article[data-fs-product-card]');
         console.log('Total products found:', productCards.length);
         const limitedProducts = Array.from(productCards).slice(0, 5).map(card => { 
@@ -29,7 +35,7 @@ async function scrapeExito(searchQuery) {
             const imageUrl = card.querySelector('img[data-fs-img]') ? card.querySelector('img[data-fs-img]').src : 'No image available';
             return { title, price, link, imageUrl, storeName: 'Exito' };
         })
-        .filter(product => normalizeString(product.title).includes(normalizeString(query)));
+        .filter(product => queryMatchTitle(query, product.title));
         return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
     await browser.close();

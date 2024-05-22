@@ -16,6 +16,12 @@ async function scrapeOlimpica(searchQuery) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
 
+        function queryMatchTitle(query, title) {
+            const queryWords = normalizeString(query).split(/\s+/);
+            const titleWords = normalizeString(title).split(/\s+/);
+            return queryWords.every(qWord => titleWords.includes(qWord));
+        }
+
         const productCards = document.querySelectorAll('.vtex-product-summary-2-x-container');
         const limitedProducts = Array.from(productCards).slice(0, 5).map(card => { 
             const title = card.querySelector('.vtex-product-summary-2-x-productNameContainer') ? card.querySelector('.vtex-product-summary-2-x-productNameContainer').innerText : 'No title available';
@@ -24,7 +30,7 @@ async function scrapeOlimpica(searchQuery) {
             const imageUrl = card.querySelector('.vtex-product-summary-2-x-imageNormal') ? card.querySelector('.vtex-product-summary-2-x-imageNormal').src : 'No image available';
             return { title, price, link, imageUrl, storeName: 'Olimpica' };
         })
-        .filter(product => normalizeString(product.title).includes(normalizeString(query)));
+        .filter(product => queryMatchTitle(query, product.title));
         return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
 

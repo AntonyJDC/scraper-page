@@ -16,6 +16,12 @@ async function scrapeMercadoLibre(searchQuery) {
             return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
 
+        function queryMatchTitle(query, title) {
+            const queryWords = normalizeString(query).split(/\s+/);
+            const titleWords = normalizeString(title).split(/\s+/);
+            return queryWords.every(qWord => titleWords.includes(qWord));
+        }
+
         const productCards = document.querySelectorAll('.ui-search-result__wrapper');
         const limitedProducts = Array.from(productCards).slice(0, 5).map(card => {
             const title = card.querySelector('.ui-search-item__title') ? card.querySelector('.ui-search-item__title').innerText : 'No title available';
@@ -24,7 +30,7 @@ async function scrapeMercadoLibre(searchQuery) {
             const imageUrl = card.querySelector('img.ui-search-result-image__element') ? card.querySelector('img.ui-search-result-image__element').src : 'No image available';
             return { title, price, link, imageUrl, storeName: 'MercadoLibre' };
         })
-        .filter(product => normalizeString(product.title).includes(normalizeString(query)));
+        .filter(product => queryMatchTitle(query, product.title));
         return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
 
