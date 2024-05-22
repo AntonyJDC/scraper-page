@@ -1,5 +1,9 @@
 const puppeteer = require('puppeteer');
 
+function normalizeString(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 async function scrapeExito(searchQuery) {
     const browser = await puppeteer.launch({
         headless: true,
@@ -11,7 +15,11 @@ async function scrapeExito(searchQuery) {
     await page.goto(`https://www.exito.com/s?q=${encodeURIComponent(searchQuery)}&sort=score_desc`)
     await page.waitForSelector('article[data-fs-product-card]', { timeout: 10000 });
 
-    const filteredProducts = await page.evaluate(() => {
+    const filteredProducts = await page.evaluate((query) => {
+        function normalizeString(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         const productCards = document.querySelectorAll('article[data-fs-product-card]');
         console.log('Total products found:', productCards.length);
         const limitedProducts = Array.from(productCards).slice(0, 5).map(card => { 
@@ -20,7 +28,8 @@ async function scrapeExito(searchQuery) {
             const link = card.querySelector('.link_fs-link__J1sGD') ? card.querySelector('.link_fs-link__J1sGD').href : 'No link available';
             const imageUrl = card.querySelector('img[data-fs-img]') ? card.querySelector('img[data-fs-img]').src : 'No image available';
             return { title, price, link, imageUrl, storeName: 'Exito' };
-        });
+        })
+        .filter(product => normalizeString(product.title).includes(normalizeString(query)));
         return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
     await browser.close();

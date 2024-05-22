@@ -12,6 +12,10 @@ async function scrapeAlkosto(searchQuery) {
     await page.waitForSelector('.product__item', { timeout: 10000 });
 
     const filteredProducts = await page.evaluate((query) => {
+        function normalizeString(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         const productCards = document.querySelectorAll('.product__item');
         const limitedProducts = Array.from(productCards).slice(0, 5).map(card => { 
             const title = card.querySelector('.product__item__top__title') ? card.querySelector('.product__item__top__title').innerText : 'No title available';
@@ -19,8 +23,8 @@ async function scrapeAlkosto(searchQuery) {
             const link = card.querySelector('.product__item__top__title').getAttribute('data-url') ? window.location.origin + card.querySelector('.product__item__top__title').getAttribute('data-url') : 'Link no available';
             const imageUrl = card.querySelector('.product__item__information__image img') ? card.querySelector('.product__item__information__image img').src : 'No image available';
             return { title, price, link, imageUrl, storeName: 'Alkosto' };
-        });
-
+        })  
+        .filter(product => normalizeString(product.title).includes(normalizeString(query)));
         return limitedProducts.sort((a, b) => a.price - b.price).slice(0, 3);
     }, searchQuery);
 
