@@ -19,7 +19,7 @@ async function scrapeMercadoLibre(searchQuery) {
         function queryMatchTitle(query, title) {
             const queryWords = normalizeString(query).split(/\s+/);
             const titleWords = normalizeString(title).split(/\s+/);
-            return queryWords.every(qWord => titleWords.includes(qWord));
+            return queryWords.some(qWord => titleWords.includes(qWord));
         }
 
         const productCards = document.querySelectorAll('.ui-search-result__wrapper');
