@@ -46,8 +46,8 @@ function showCards(filteredProducts = allProducts) {
                     <div class="card-info">
                         <h3>${product.title}</h3>
                         <p class="price">$${product.price}</p>
-                        <p>${product.storeName || 'Nombre de tienda no disponible'}</p>
-                        <button onclick="window.open('${product.link}', '_blank')" class="product-button">Ver Producto</button>
+                        <p><strong>Vendido por: </strong>${product.storeName || 'Nombre de tienda no disponible'}</p>
+                        <button onclick="window.open('${product.link}', '_blank')" class="product-button"><span class="icon-cart"></span> Ver Producto</button>
                     </div>`;
         cardsContainer.appendChild(card);
     }

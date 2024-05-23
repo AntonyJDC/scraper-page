@@ -22,7 +22,10 @@
                 <img class="logo" src="assets/images/logo2.png" alt="Logo">
                 <div class="search-bar">
                     <input type="text" placeholder="Ingresa el nombre del producto..." class="search-input" id="searchQuery">
-                    <button onclick="searchProducts()" class="search-button">Buscar</button>
+                    <button onclick="searchProducts()" class="search-button">
+                        <span class="icon-search"></span>
+                        Buscar
+                    </button>
                 </div>
             </div>
         </header>
@@ -53,16 +56,16 @@
                     <a class="label-title">Ordenar Por:</a>
                     <div>
                         <input type="radio" id="sortLower" name="sortPrice" value="lower" checked>
-                        <label for="sortLower">Menor Precio</label>
+                        <label for="sortLower">Menor Precio <span class="icon-play3up"></span> </label>
                     </div>
                     <div>
                         <input type="radio" id="sortHigher" name="sortPrice" value="higher">
-                        <label for="sortHigher">Mayor Precio</label>
+                        <label for="sortHigher">Mayor Precio <span class="icon-play3do"></span> </label>
                     </div>
                 </div>
                 <!-- Filtrar por tienda usando checkboxes -->
                 <div class="filter-section">
-                    <a class="label-title">Filtrar por Tienda:</a>
+                    <a class="label-title"> <span class="icon-sort-alpha-asc"></span> Filtrar por Tienda:</a>
                     <div id="storeFilters">
                     </div>
                 </div>
